@@ -1,8 +1,10 @@
 import { useContext } from "react"
 import Chart from "../Components/Chart"
+import {AppContext} from "../Context/AppContext"
 
 const Dashboard = () => {
   const { IncomeData, ExpenseData } = useContext(AppContext)
+
   const totalIncome = IncomeData.reduce((sum, item) => sum + parseFloat(item.amount), 0)
   const totalExpense = ExpenseData.reduce((sum, item) => sum + parseFloat(item.amount), 0)
 
@@ -27,13 +29,13 @@ const Dashboard = () => {
       <div className=" items-center justify-center flex md:mt-20">
         <div className="flex flex-col items-center justify-center md:h-full w-96">
           <h1 className="font-bold text-lg md:text-3xl underline">Total Balance</h1>
-          <p className="font-medium text-3xl md:text-7xl" style={{color: totalBalance<0 ?"red": "green"}} >${totalBalance.toFixed(2)}</p>
+          <p className="font-medium text-3xl md:text-7xl" style={{color: totalBalance <0 ?"red": "green"}} >${totalBalance.toFixed(2)}</p>
         </div>
 
       </div>
 
     </>
   )
-}
+};
 
-export default Dashboard
+export default Dashboard;

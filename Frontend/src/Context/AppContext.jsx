@@ -8,14 +8,16 @@ import { jwtDecode } from "jwt-decode"
 export const AppContext = createContext()
 const AppContextProvider = ({ children }) => {
   const navigate = useNavigate()
+
   const [ExpenseData, setExpenseData] = useState([])
   const [IncomeData, setIncomeData] = useState([])
+  
   const [token, setToken] = useState(Boolean(cookie.get("token")))
 
   const backendUrl = 'http://localhost:4000'
   const utoken = cookie.get('token')
 
-  const fecthIncome = async () => {
+  const fetchIncome = async () => {
     try {
       const decodeToken = jwtDecode(utoken)
       const userId = decodeToken?.id
@@ -23,7 +25,7 @@ const AppContextProvider = ({ children }) => {
       if (!userId) {
         return
       }
-      const { data } = await axios.get(`$ {backend}/api/user/get-income`, {
+      const { data } = await axios.get(`${backend}/api/user/get-income`, {
         headers: {
           Authorization: `Bearer ${utoken}`
         }
@@ -40,7 +42,7 @@ const AppContextProvider = ({ children }) => {
     }
 
   }
-  const fecthExpense = async () => {
+  const fetchExpense = async () => {
     try {
       const decodeToken = jwtDecode(utoken)
       const userId = decodeToken?.id
@@ -48,7 +50,7 @@ const AppContextProvider = ({ children }) => {
       if (!userId) {
         return
       }
-      const { data } = await axios.get(`$ {backend}/api/user/get-expense`, {
+      const { data } = await axios.get(`${backend}/api/user/get-expense`, {
         headers: {
           Authorization: `Bearer ${utoken}`
         }
@@ -74,7 +76,7 @@ const AppContextProvider = ({ children }) => {
     })
     if (data.success) {
       toast.success(data.message)
-      fecthIncome()
+      fetchIncome()
       navigate('/')
     }
   }
@@ -82,19 +84,19 @@ const AppContextProvider = ({ children }) => {
   const addExpense = async (title, amount, income, categaries, description, date) => {
     const { data } = await axios.post(`${backendUrl}/api/user/add-expense`, { title, amount, income, categaries, description, date }, {
       headers: {
-        Authorization: `Bearer${utoken}`
+        Authorization: `Bearer ${utoken}`
       }
     })
     if (data.success) {
       toast.success(data.message)
-      fecthExpense()
+      fetchExpense()
       navigate('/')
     }
   }
 
   const handelRegister = async (name, email, password) => {
     try {
-      const { data } = await axios.post(`$ {backendUrl}/api/user/register`, { name, email, password }, {
+      const { data } = await axios.post(`${backendUrl}/api/user/register`, { name, email, password }, {
         headers: {
           "Content-Type": "application/json"
 
@@ -102,10 +104,10 @@ const AppContextProvider = ({ children }) => {
       })
       if (data.success) {
         cookie.set("token", data.token, { expires: 7 })
-        set.token(true)
+        setToken(true)
         toast.success(data.message || "Register successfull")
-        fecthIncome()
-        fecthExpense()
+        fetchIncome()
+        fetchExpense()
         navigate('/')
       }
     } catch (error) {
@@ -115,7 +117,7 @@ const AppContextProvider = ({ children }) => {
 
   const handelLogin = async (email, password) => {
     try {
-      const { data } = await axios.post(`$ {backendUrl}/api/user/register`, { email, password }, {
+      const { data } = await axios.post(`${backendUrl}/api/user/login`, { email, password }, {
         headers: {
           "Content-Type": "application/json"
 
@@ -125,8 +127,8 @@ const AppContextProvider = ({ children }) => {
         cookie.set("token", data.token, { expires: 7 })
         set.token(true)
         toast.success(data.message || "Login successfull")
-        fecthIncome()
-        fecthExpense()
+        fetchIncome()
+        fetchExpense()
         navigate('/')
       }
     } catch (error) {
@@ -135,8 +137,8 @@ const AppContextProvider = ({ children }) => {
   }
 
   useEffect(() => {
-    fecthIncome()
-    fecthExpense()
+    fetchIncome()
+    fetchExpense()
 
   }, [])
 
@@ -149,12 +151,12 @@ const AppContextProvider = ({ children }) => {
     }
   },[token])
 
-  const values = {
+  const value = {
     backendUrl,
     handelRegister,
     handelLogin,
-    fecthIncome,
-    fecthExpense,
+    fetchIncome,
+    fetchExpense,
     addIncome,
     addExpense,
     IncomeData,
@@ -164,9 +166,9 @@ const AppContextProvider = ({ children }) => {
 
   }
 
-  return <AppContext.Provider values={values}>
+  return <AppContext.Provider value={value}>
     {children}
   </AppContext.Provider>
 }
 
-export default AppContextProvider
+export default AppContextProvider;
