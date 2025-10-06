@@ -36,20 +36,20 @@ const App = () => {
 
   return (
     // <div className='text-red-500'>Hello</div>
-    <div className='flex flex-row max-h-screen'>
+    <div className='flex flex-row'>
       <ToastContainer />
       <SideBar />
       {!hideMainLayout ? (
         <div className='flex flex-row w-full overflow-auto'>
           <div className='flex-1 w-1/2'>
              <Routes>
-               <Route path='/' element={<Dashboard />} />
+                <Route path='/' element={<Dashboard />} />
             </Routes>
             </div>
-                  <div className='flex-1 flex-col md:w-1/3 hidden lg:flex overflow-auto'>
-            <Routes>
-                 <Route path='/' element={<History/>} />
-            </Routes>
+            <div className='flex-1 flex-col md:w-1/3 hidden lg:flex overflow-auto'>
+              <Routes>
+                <Route path='/' element={<History/>} />
+              </Routes>
           </div>
         </div>
       ) : (

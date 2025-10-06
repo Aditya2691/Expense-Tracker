@@ -4,7 +4,7 @@ import { GoGraph } from "react-icons/go";
 import { FaRegCreditCard } from "react-icons/fa";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { GiExpense } from "react-icons/gi";
-import { IoLogout } from "react-icons/io5";
+import { IoLogOut } from "react-icons/io5";
 import { FaArrowsDownToLine, FaArrowsUpToLine } from "react-icons/fa6";
 import { useContext } from 'react';
 import { AppContext } from '../Context/AppContext';
@@ -72,11 +72,11 @@ const SideBar = () => {
       <div className='flex flex-row items-center lg:hover:bg-red-500 lg:border-none hover:border-l-2 border-red-500 justify-center gap-5 py-2 px-2'>
         {token ?
           <NavLink onClick={handleLogout} className='w-full flex flex-row items-center justify-center gap-2 py-2 px-2 rounded-lg cursor-pointer'>
-            <IoLogout className='text-2xl text-white' />
+            <IoLogOut className='text-2xl text-white' />
             <p className='text-lg font-semibold hidden md:block text-white'>Logout</p>
           </NavLink> :
           <NavLink to={'/login'} className='w-full flex flex-row items-center justify-center gap-2 py-2 px-2 rounded-lg cursor-pointer'>
-            <IoLogout className='text-2xl text-white' />
+            <IoLogOut className='text-2xl text-white' />
             <p className='text-lg font-semibold hidden md:block text-white'>Login</p>
           </NavLink>}
       </div>
