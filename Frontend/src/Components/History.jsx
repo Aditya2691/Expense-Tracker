@@ -68,7 +68,7 @@ const History = () => {
     ]
   }
 
-  const chartOption = {
+  const chartOptions = {
     reponsive: true,
     plugins: {
       title: {
@@ -85,28 +85,26 @@ const History = () => {
 
 
   return (
-    <div className='w-full  hidden lg:block mx-auto p-4'>
+    <div className='w-full hidden lg:block mx-auto p-4'>
       <h1 className='text-3xl font-semibold text-center mb-2'>Recent History</h1>
-      <div className='space-y-4 h-72 overflow-y-scroll'>
+      <div className='space-y-4 overflow-y-scroll'>
         {IncomeData.map((item, index) => (
           <div key={index} className='flex justify-between items-center p-2 bg-white shadow-lg border-gray-200'>
             <div className='flex flex-col'>
               <h3 className='text-lg font-medium text-gray-800'>{item.title}</h3>
-              <p className='text-sm text-gray-600'>{item.amount}</p>
+              <p className='text-sm text-gray-600'>$ {item.amount}</p>
             </div>
             <div className='text-sm font-semibold text-green-500'>
               $ {item.amount}
             </div>
           </div>
         ))}
-
-
         {ExpenseData.map((item, index) => (
-          <div key={index} className='flex justify-between items-center p-2 bg-white shadow-lg rounded-lg border-gray-200'>
+          <div key={index} className='flex justify-between items-center p-2 bg-white shadow-lg rounded-lg border border-gray-200'>
 
             <div className='flex flex-col'>
               <h3 className='text-lg font-medium text-gray-800'>{item.title}</h3>
-              <p className='text-sm text-gray-600'>{item.amount}</p>
+              <p className='text-sm text-gray-600'>$ {item.amount}</p>
             </div>
             <div className='text-sm font-semibold text-red-500'>
               $ {item.amount}
@@ -115,8 +113,8 @@ const History = () => {
         ))}
       </div>
       <div className='mt-1 rounded-lg p-6'>
-        <h2 className='text-x1 font-semibold mb-4'>Spend Overview</h2>
-        <Pie data={chartData} option={chartOption} />
+        <h2 className='text-xl font-semibold mb-4'>Spend Overview</h2>
+        <Pie data={chartData} options={chartOptions} />
       </div>
     </div>
 

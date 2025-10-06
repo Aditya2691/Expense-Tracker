@@ -20,7 +20,7 @@ const Dashboard = () => {
           <p className="text-xl text-green-500 font-bold md:mt-2 ">${totalIncome.toFixed(2)}</p>
         </div>
         <div className="m-4 justify-between flex flex-col p-3 w-1/2 h-20">
-          <h1 className="font-bold text-sm md:text-2xl">Total Income</h1>
+          <h1 className="font-bold text-sm md:text-2xl">Total Expense</h1>
           <p className="text-xl text-red-500 font-bold md:mt-2 ">${totalExpense.toFixed(2)}</p>
         </div>
 
