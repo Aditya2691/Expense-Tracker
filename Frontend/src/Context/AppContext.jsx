@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
 
   const fetchIncome = async () => {
     try {
-      const decodeToken = jwtDecode(utoken)
+      const decodeToken = jwtDecode("utoken")
       const userId = decodeToken?.id
 
       if (!userId) {
