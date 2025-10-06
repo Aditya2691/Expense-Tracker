@@ -46,7 +46,7 @@ const Income = () => {
           <label className="block text-gray-800 mb-2">Amount</label>
           <input
             type="number"
-            name="title"
+            name="amount"
             value={fromData.amount}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
