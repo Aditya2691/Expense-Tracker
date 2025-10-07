@@ -19,13 +19,13 @@ const AppContextProvider = ({ children }) => {
 
   const fetchIncome = async () => {
     try {
-      const decodeToken = jwtDecode(token)
+      if (!utoken) return;
+      const decodeToken = jwtDecode(utoken)
       const userId = decodeToken?.id
 
-      if (!userId) {
-        return
-      }
-      const { data } = await axios.get(`${backend}/api/user/get-income`, {
+      if (!userId)  return;
+      
+      const { data } = await axios.get(`${backendUrl}/api/user/get-income`, {
         headers: {
           Authorization: `Bearer ${utoken}`
         }
@@ -39,18 +39,19 @@ const AppContextProvider = ({ children }) => {
 
     } catch (error) {
       console.log(error)
+      toast.error("Failed to fetch income data");
     }
 
   }
   const fetchExpense = async () => {
     try {
-      const decodeToken = jwtDecode(token)
+      if (!utoken) return;
+      const decodeToken = jwtDecode(utoken)
       const userId = decodeToken?.id
 
-      if (!userId) {
-        return
-      }
-      const { data } = await axios.get(`${backend}/api/user/get-expense`, {
+      if (!userId) return;
+      
+      const { data } = await axios.get(`${backendUrl}/api/user/get-expense`, {
         headers: {
           Authorization: `Bearer ${utoken}`
         }
@@ -59,17 +60,16 @@ const AppContextProvider = ({ children }) => {
         setExpenseData(data.data)
       }
 
-
-
-
     } catch (error) {
       console.log(error)
+      toast.error("Failed to fetch expense data");
     }
 
   }
 
-  const addIncome = async (title, amount, income, categaries, description, date) => {
-    const { data } = await axios.post(`${backendUrl}/api/user/add-income`, { title, amount, income, categaries, description, date }, {
+  const addIncome = async (title, amount, type, category, description, date) => {
+    try {
+      const { data } = await axios.post(`${backendUrl}/api/user/add-income`, { title, amount, type, category, description, date }, {
       headers: {
         Authorization: `Bearer ${utoken}`
       }
@@ -79,10 +79,16 @@ const AppContextProvider = ({ children }) => {
       fetchIncome()
       navigate('/')
     }
+    
+  } catch (error) {
+    console.log(error)
+    toast.error(error.response?.data?.message || "Failed to add income");
   }
+}
 
-  const addExpense = async (title, amount, income, categaries, description, date) => {
-    const { data } = await axios.post(`${backendUrl}/api/user/add-expense`, { title, amount, income, categaries, description, date }, {
+  const addExpense = async (title, amount, type, category, description, date) => {
+   try {
+     const { data } = await axios.post(`${backendUrl}/api/user/add-expense`, { title, amount, type, category, description, date }, {
       headers: {
         Authorization: `Bearer ${utoken}`
       }
@@ -92,7 +98,11 @@ const AppContextProvider = ({ children }) => {
       fetchExpense()
       navigate('/')
     }
+  } catch (error) {
+    console.log(error)
+    toast.error(error.response?.data?.message || "Failed to add expense");
   }
+}
 
   const handelRegister = async (name, email, password) => {
     try {
@@ -112,6 +122,7 @@ const AppContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error)
+      toast.error(error.response?.data?.message || "Registration failed");
     }
   }
 
@@ -133,14 +144,18 @@ const AppContextProvider = ({ children }) => {
       }
     } catch (error) {
       console.log(error)
+      toast.error(error.response?.data?.message || "Login failed");
     }
   }
 
   useEffect(() => {
-    fetchIncome()
-    fetchExpense()
+    if(token){
 
-  }, [])
+      fetchIncome()
+      fetchExpense()
+    }
+
+  }, [token])
 
   useEffect(() => {
     if (token) {

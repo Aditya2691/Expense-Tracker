@@ -4,12 +4,12 @@ const addIncome = async (req, res) => {
 
     const userId = req.user?.id
 
-    const { title, amount, categories, description, date } = req.body;
+    const { title, type, amount, category, description, date } = req.body;
 
     const parseAmount = Number(amount)
 
     try {
-        if (!title || !amount || !categories || !description || !date) {
+        if (!title || !type || !amount || !category || !description || !date) {
             return res.status(400).json({ message: "All fields required" })
         }
         if (isNaN(parseAmount) || parseAmount <= 0) {
@@ -17,7 +17,7 @@ const addIncome = async (req, res) => {
         }
 
         const newIncome = new IncomeModel({
-            userId, title, amount, categories, description, date
+            userId, type, title, amount, category, description, date
         })
 
         await newIncome.save()
@@ -47,7 +47,7 @@ const deleteIncome = async (req, res) => {
 }
 const updateIncome = async (req, res) => {
     const { id } = req.params;
-    const { title, amount, categories, description, date } = req.body;
+    const { title, amount, type, category, description, date } = req.body;
     try {
         const incomeUpdate = await IncomeModel.findById(id);
         if (!incomeUpdate) {
@@ -55,7 +55,8 @@ const updateIncome = async (req, res) => {
         }
         incomeUpdate.title = title || incomeUpdate.title;
         incomeUpdate.amount = amount || incomeUpdate.amount;
-        incomeUpdate.categories = categories || incomeUpdate.categories;
+        incomeUpdate.type = type || incomeUpdate.type;
+        incomeUpdate.category = category || incomeUpdate.category;
         incomeUpdate.description = description || incomeUpdate.description;
         incomeUpdate.date = date || incomeUpdate.date;
         await incomeUpdate.save(); res.status(200).json({ success: true, message: "Income updated", data: incomeUpdate });
