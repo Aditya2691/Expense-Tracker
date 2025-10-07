@@ -114,7 +114,7 @@ const History = () => {
       </div>
       <div className='mt-1 rounded-lg p-6'>
         <h2 className='text-xl font-semibold mb-4'>Spend Overview</h2>
-        <Pie data={chartData} options={chartOptions} />
+        <Pie className='size-2' data={chartData} options={chartOptions} />
       </div>
     </div>
 

@@ -18,6 +18,7 @@ const ViewTransaction = () => {
             <th className="p-4 text-left">Category</th>
             <th className="p-4 text-left">Type</th>
             <th className="p-4 text-left">Date</th>
+            <th className="p-4 text-left">Type</th>
             <th className="p-4 text-left">Amount</th>
 
           </thead>
@@ -26,9 +27,10 @@ const ViewTransaction = () => {
               <tr key={index} className="border-b last:border-none hover:bg-gray-50 transition-colors">
                     <td>{transaction.title}</td>
                     <td>{transaction.category}</td>
+                    <td>{transaction.type}</td>
                     <td>{(new Date(transaction.date).toLocaleDateString())}</td>
                     <td>{transaction.type=== 'income'? "Income" :"Expense"}</td>
-                    <td className={`p-4 text-right font-semibold ${transaction.type === "income" ? "text-green-500" : "text-red-500"}`}>$ {transaction.amount}</td>
+                    <td className={`p-4 text-left font-semibold ${transaction.type === "income" ? "text-green-500" : "text-red-500"}`}>$ {transaction.amount}</td>
               </tr>
             ))}
           </tbody>

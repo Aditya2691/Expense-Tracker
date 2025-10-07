@@ -24,11 +24,12 @@ const ExpenseTransaction = () => {
           <tbody>
             {ExpenseData.map((transaction, index)=>(
               <tr key={index} className="border-b last:border-none hover:bg-gray-50 transition-colors">
-                    <td>{transaction.Title}</td>
-                    <td>{transaction.category}</td>
-                    <td>{(new Date(transaction.date).toLocaleDateString())}</td>
-                    <td className="p-4 text-right text-red-500 font-semibold">$ {transaction.amount}</td>
-                    <td className="p-4 text-center">
+                    <td className="p-4 text-left">{transaction.title}</td>
+                    <td className="p-4 text-left">{transaction.category}</td>
+                    <td className="p-4 text-left">{transaction.type}</td>
+                    <td className="p-4 text-left">{(new Date(transaction.date).toLocaleDateString())}</td>
+                    <td className="p-4 text-left text-red-500 font-semibold">$ {transaction.amount}</td>
+                    <td className="p-4 text-left">
                       <button className="text-red-500 hover:text-red-700 transition=colors">
                         <FiTrash2 size={20}/>
                       </button>
