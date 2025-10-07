@@ -9,7 +9,7 @@ import ViewTransaction from './Pages/ViewTransaction';
 import Income from './Pages/Income';
 import Expenses from './Pages/Expenses';
 import IncomeTransaction from './Pages/IncomeTransaction';
-import ExpensesTransaction from './Pages/ExpensesTransaction';
+import ExpenseTransaction from './Pages/ExpenseTransaction';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 
@@ -59,7 +59,7 @@ const App = () => {
             <Route path='/add-income' element={<Income />} />
             <Route path='/add-expense' element={<Expenses />} />
             <Route path='/income-transaction' element={<IncomeTransaction />} />
-            <Route path='/expense-transaction' element={<ExpensesTransaction />} />
+            <Route path='/expense-transaction' element={<ExpenseTransaction />} />
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
           </Routes>

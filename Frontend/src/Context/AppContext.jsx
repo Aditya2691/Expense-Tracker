@@ -19,7 +19,7 @@ const AppContextProvider = ({ children }) => {
 
   const fetchIncome = async () => {
     try {
-      const decodeToken = jwtDecode("utoken")
+      const decodeToken = jwtDecode(token)
       const userId = decodeToken?.id
 
       if (!userId) {
@@ -44,7 +44,7 @@ const AppContextProvider = ({ children }) => {
   }
   const fetchExpense = async () => {
     try {
-      const decodeToken = jwtDecode(utoken)
+      const decodeToken = jwtDecode(token)
       const userId = decodeToken?.id
 
       if (!userId) {
@@ -71,7 +71,7 @@ const AppContextProvider = ({ children }) => {
   const addIncome = async (title, amount, income, categaries, description, date) => {
     const { data } = await axios.post(`${backendUrl}/api/user/add-income`, { title, amount, income, categaries, description, date }, {
       headers: {
-        Authorization: `Bearer${utoken}`
+        Authorization: `Bearer ${utoken}`
       }
     })
     if (data.success) {
@@ -125,7 +125,7 @@ const AppContextProvider = ({ children }) => {
       })
       if (data.success) {
         cookie.set("token", data.token, { expires: 7 })
-        set.token(true)
+        setToken(true)
         toast.success(data.message || "Login successfull")
         fetchIncome()
         fetchExpense()
