@@ -4,12 +4,12 @@ const addExpense = async (req, res) => {
 
     const userId = req.user?.id
 
-    const { title, amount, categories, description, date } = req.body;
+    const { title, amount,type, category, description, date } = req.body;
 
     const parseAmount = Number(amount)
 
     try {
-        if (!title || !amount || !categories || !description || !date) {
+        if (!title || !type || !amount || !category || !description || !date) {
             return res.status(400).json({ message: "All fields required" })
         }
         if (isNaN(parseAmount) || parseAmount <= 0) {
@@ -17,7 +17,7 @@ const addExpense = async (req, res) => {
         }
 
         const newExpense = new ExpenseModel({
-            userId, title, amount, categories, description, date
+            userId, type, title, amount, category, description, date
         })
 
         await newExpense.save()
@@ -47,7 +47,7 @@ const deleteExpense = async (req, res) => {
 }
 const updateExpense = async (req, res) => {
     const { id } = req.params;
-    const { title, amount, categories, description, date } = req.body;
+    const { title, amount,type, category, description, date } = req.body;
     try {
         const ExpenseUpdate = await ExpenseModel.findById(id);
         if (!ExpenseUpdate) {
@@ -55,7 +55,8 @@ const updateExpense = async (req, res) => {
         }
         ExpenseUpdate.title = title || ExpenseUpdate.title;
         ExpenseUpdate.amount = amount || ExpenseUpdate.amount;
-        ExpenseUpdate.categories = categories || ExpenseUpdate.categories;
+        ExpenseUpdate.type =type || ExpenseUpdate.type;
+        ExpenseUpdate.category = category || ExpenseUpdate.category;
         ExpenseUpdate.description = description || ExpenseUpdate.description;
         ExpenseUpdate.date = date || ExpenseUpdate.date;
         await ExpenseUpdate.save(); res.status(200).json({ success: true, message: "Expense updated", data: ExpenseUpdate });
